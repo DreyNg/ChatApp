@@ -54,10 +54,14 @@ class LoginScreen {
         if (isValidEmail(email.value) != true) {
             this.emailInput.displayError(isValidEmail(email.value));
             hasError = true;
+        } else {
+            this.emailInput.displayError("");
         }
         if (isValidPassword(password.value) != true) {
             this.passwordInput.displayError(isValidPassword(password.value));
             hasError = true;
+        } else {
+            this.passwordInput.displayError("");
         }
         if (!hasError) {
             console.log("email", email.value, "password", password.value);

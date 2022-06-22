@@ -1,6 +1,6 @@
-import LoginScreen from "./containers/Login/loginIndex.js";
-
+import LoginScreen from "./containers/Login/LoginIndex.js";
+import RegisterScreen from "./containers/Register/RegisterIndex.js";
 const app = document.getElementById("app");
 const loginScreen = new LoginScreen();
-
-app.appendChild(loginScreen.render());
+const registerScreen = new RegisterScreen();
+app.appendChild(registerScreen.render());
