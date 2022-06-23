@@ -1,6 +1,18 @@
 import LoginScreen from "./containers/Login/LoginIndex.js";
 import RegisterScreen from "./containers/Register/RegisterIndex.js";
-const app = document.getElementById("app");
-const loginScreen = new LoginScreen();
-const registerScreen = new RegisterScreen();
-app.appendChild(registerScreen.render());
+
+class App {
+    constructor() {
+        const app = document.getElementById("app");
+        const loginScreen = new LoginScreen();
+        app.appendChild(loginScreen.render());
+    }
+    switchCurrentScreen(screen) {
+        const app = document.getElementById("app");
+        app.innerHTML = "";
+        app.appendChild(screen.render());
+    }
+}
+
+const app = new App();
+export default app;

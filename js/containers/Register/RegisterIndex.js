@@ -1,7 +1,9 @@
 import ButtonComponent from "../../components/ButtonComponent.js";
 import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
-class LoginScreen {
+import LoginScreen from "../Login/loginIndex.js";
+import app from "../../index.js";
+class RegisterScreen {
     container;
 
     formLogin;
@@ -9,6 +11,7 @@ class LoginScreen {
     passwordInput;
     passwordConfirmationInput;
 
+    switchScreen;
     imageCover;
     formLogin;
     buttonSubmit;
@@ -24,6 +27,11 @@ class LoginScreen {
         this.formLogin = document.createElement("form");
         this.formLogin.classList.add("form-container");
         this.formLogin.addEventListener("submit", this.handleSubmit);
+
+        this.switchScreen = document.createElement("a");
+        this.switchScreen.innerText = "I already have an account!";
+        this.switchScreen.classList.add("d-block", "switchScreen");
+        this.switchScreen.addEventListener("click", this.handleSwitchScreen);
 
         this.title = document.createElement("div");
         this.title.classList.add("big-title");
@@ -55,6 +63,14 @@ class LoginScreen {
             "password"
         );
     }
+
+    handleSwitchScreen = (e) => {
+        // const loginScreen = new LoginScreen();
+        // const app = document.getElementById("app");
+        // app.innerHTML = "";
+        // app.appendChild(loginScreen.render());
+        app.switchCurrentScreen(new LoginScreen());
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -105,7 +121,8 @@ class LoginScreen {
             this.emailInput.render(),
             this.passwordInput.render(),
             this.passwordConfirmationInput.render(),
-            this.buttonSubmit.render()
+            this.buttonSubmit.render(),
+            this.switchScreen
         );
 
         this.container.append(this.imageCover, this.formLogin);
@@ -113,4 +130,4 @@ class LoginScreen {
     }
 }
 
-export default LoginScreen;
+export default RegisterScreen;

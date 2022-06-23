@@ -47,3 +47,10 @@ body {
 .error-message {
     color: red;
 }
+
+.switchScreen {
+    text-decoration: none;
+    text-align: right;
+    margin-top: 12px;
+    cursor: pointer;
+}

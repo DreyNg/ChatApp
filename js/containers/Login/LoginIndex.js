@@ -1,11 +1,14 @@
 import ButtonComponent from "../../components/ButtonComponent.js";
 import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
+import RegisterScreen from "../Register/RegisterIndex.js";
+import app from "../../index.js";
 class LoginScreen {
     container;
 
     emailInput;
     passwordInput;
+    switchScreen;
     imageCover;
     formLogin;
     buttonSubmit;
@@ -21,6 +24,11 @@ class LoginScreen {
         this.formLogin = document.createElement("form");
         this.formLogin.classList.add("form-container");
         this.formLogin.addEventListener("submit", this.handleSubmit);
+
+        this.switchScreen = document.createElement("a");
+        this.switchScreen.innerText = "Create new account";
+        this.switchScreen.classList.add("d-block", "switchScreen");
+        this.switchScreen.addEventListener("click", this.handleSwitchScreen);
 
         this.title = document.createElement("div");
         this.title.classList.add("big-title");
@@ -46,6 +54,14 @@ class LoginScreen {
             "password"
         );
     }
+
+    handleSwitchScreen = (e) => {
+        // const registerScreen = new RegisterScreen();
+        // const app = document.getElementById("app");
+        // app.innerHTML = "";
+        // app.appendChild(registerScreen.render());
+        app.switchCurrentScreen(new RegisterScreen());
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -73,7 +89,8 @@ class LoginScreen {
             this.title,
             this.emailInput.render(),
             this.passwordInput.render(),
-            this.buttonSubmit.render()
+            this.buttonSubmit.render(),
+            this.switchScreen
         );
 
         this.container.append(this.imageCover, this.formLogin);
