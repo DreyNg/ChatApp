@@ -3,6 +3,7 @@ import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
 import RegisterScreen from "../Register/RegisterIndex.js";
 import app from "../../index.js";
+import { loginWithEmailPass } from "../../firebase/auth.js";
 class LoginScreen {
     container;
 
@@ -56,10 +57,6 @@ class LoginScreen {
     }
 
     handleSwitchScreen = (e) => {
-        // const registerScreen = new RegisterScreen();
-        // const app = document.getElementById("app");
-        // app.innerHTML = "";
-        // app.appendChild(registerScreen.render());
         app.switchCurrentScreen(new RegisterScreen());
     };
 
@@ -80,7 +77,7 @@ class LoginScreen {
             this.passwordInput.displayError("");
         }
         if (!hasError) {
-            console.log("email", email.value, "password", password.value);
+            loginWithEmailPass(email.value, password.value);
         }
     };
 

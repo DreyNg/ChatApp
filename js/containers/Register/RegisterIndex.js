@@ -3,6 +3,7 @@ import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
 import LoginScreen from "../Login/loginIndex.js";
 import app from "../../index.js";
+import { createNewAccount } from "../../firebase/auth.js";
 class RegisterScreen {
     container;
 
@@ -65,10 +66,6 @@ class RegisterScreen {
     }
 
     handleSwitchScreen = (e) => {
-        // const loginScreen = new LoginScreen();
-        // const app = document.getElementById("app");
-        // app.innerHTML = "";
-        // app.appendChild(loginScreen.render());
         app.switchCurrentScreen(new LoginScreen());
     };
 
@@ -105,13 +102,7 @@ class RegisterScreen {
         }
 
         if (!hasError) {
-            console.log(
-                "regisstered successfully",
-                "email",
-                email.value,
-                "password",
-                password.value
-            );
+            createNewAccount(email.value, password.value);
         }
     };
 
