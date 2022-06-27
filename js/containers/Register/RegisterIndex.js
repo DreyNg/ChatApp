@@ -98,13 +98,21 @@ class RegisterScreen {
             );
             hasError = true;
         } else {
-            this.passwordConfirmationInput.displayError("");
+            if (this.passwordConfirmationInput.innerText != "") {
+                this.passwordConfirmationInput.displayError("");
+            }
         }
 
         if (!hasError) {
-            createNewAccount(email.value, password.value);
+            this.setLoading();
+            // createNewAccount(email.value, password.value);
         }
     };
+
+    setLoading() {
+        this.buttonSubmit.render().innerText = "";
+        this.buttonSubmit.render().innerHTML = `<div class="loader"></div>`;
+    }
 
     render() {
         this.formLogin.append(

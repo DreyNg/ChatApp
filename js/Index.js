@@ -1,5 +1,4 @@
 import LoginScreen from "./containers/Login/LoginIndex.js";
-import RegisterScreen from "./containers/Register/RegisterIndex.js";
 
 class App {
     constructor() {
