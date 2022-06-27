@@ -1,6 +1,7 @@
 import CheckEmailScreen from "./containers/CheckEmail/CheckEmailScreen.js";
 import LoginScreen from "./containers/Login/LoginScreen.js";
 import MainScreen from "./Main/MainScreen.js";
+import InfoScreen from "./containers/Info/InfoScreen.js";
 
 class App {
     constructor() {
@@ -24,7 +25,7 @@ class App {
             let screen;
             if (user) {
                 if (user.emailVerified) {
-                    screen = new MainScreen();
+                    screen = new InfoScreen();
                 } else {
                     screen = new CheckEmailScreen();
                 }
