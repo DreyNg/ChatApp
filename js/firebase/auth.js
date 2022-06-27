@@ -5,14 +5,14 @@ const config = {
     handleCodeInApp: true,
 };
 
-const createNewAccount = (email, password) => {
-    firebase
+const createNewAccount = async (email, password) => {
+    return firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Signed in
             let user = userCredential.user;
-            user.sendEmailVerification(config);
+            return user.sendEmailVerification(config);
             // ...
         })
         .catch((error) => {

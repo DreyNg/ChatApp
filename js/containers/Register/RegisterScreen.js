@@ -1,7 +1,8 @@
 import ButtonComponent from "../../components/ButtonComponent.js";
 import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
-import LoginScreen from "../Login/loginIndex.js";
+import LoginScreen from "../Login/LoginScreen.js";
+import CheckEmailScreen from "../CheckEmail/CheckEmailScreen.js";
 import app from "../../index.js";
 import { createNewAccount } from "../../firebase/auth.js";
 class RegisterScreen {
@@ -69,7 +70,7 @@ class RegisterScreen {
         app.switchCurrentScreen(new LoginScreen());
     };
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         const { email, password, passwordConfirmationInput } = e.target;
         let hasError = false;
@@ -98,20 +99,26 @@ class RegisterScreen {
             );
             hasError = true;
         } else {
-            if (this.passwordConfirmationInput.innerText != "") {
-                this.passwordConfirmationInput.displayError("");
-            }
+            this.passwordConfirmationInput.displayError("");
         }
 
         if (!hasError) {
             this.setLoading();
-            // createNewAccount(email.value, password.value);
+            await createNewAccount(email.value, password.value);
+            this.undoLoading();
+            // const checkScreenScreen = new CheckEmailScreen();
+            // app.switchCurrentScreen(checkScreenScreen);
         }
     };
 
     setLoading() {
         this.buttonSubmit.render().innerText = "";
         this.buttonSubmit.render().innerHTML = `<div class="loader"></div>`;
+    }
+
+    undoLoading() {
+        this.buttonSubmit.render().innerHTML = ``;
+        this.buttonSubmit.render().innerText = "Sign up";
     }
 
     render() {

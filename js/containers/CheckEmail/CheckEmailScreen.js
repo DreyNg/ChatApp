@@ -25,7 +25,7 @@ class CheckEmailScreen {
         </p>
         <p>
         If you wait it too long. You can
-        <a>click here</a> to login
+        <a href="mailto:" class="switchScreen">click here</a> to login
         </p>
     </div>
     </div>

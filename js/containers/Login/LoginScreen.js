@@ -1,9 +1,10 @@
 import ButtonComponent from "../../components/ButtonComponent.js";
 import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
-import RegisterScreen from "../Register/RegisterIndex.js";
+import RegisterScreen from "../Register/RegisterScreen.js";
 import app from "../../index.js";
 import { loginWithEmailPass } from "../../firebase/auth.js";
+import MainScreen from "../../Main/MainScreen.js";
 class LoginScreen {
     container;
 
@@ -60,7 +61,7 @@ class LoginScreen {
         app.switchCurrentScreen(new RegisterScreen());
     };
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         const { email, password } = e.target;
         let hasError = false;
@@ -77,7 +78,12 @@ class LoginScreen {
             this.passwordInput.displayError("");
         }
         if (!hasError) {
-            loginWithEmailPass(email.value, password.value);
+            const userLogin = await loginWithEmailPass(
+                email.value,
+                password.value
+            );
+            const mainScreen = new MainScreen();
+            app.switchCurrentScreen(mainScreen);
         }
     };
 

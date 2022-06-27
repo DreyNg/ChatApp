@@ -55,6 +55,25 @@ body {
     cursor: pointer;
 }
 
+.forny-inner {
+    display: grid;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+}
+.mail {
+    padding: 0;
+    margin: 0;
+}
+.mail h1 {
+    font-size: 40px;
+    font-weight: 700;
+    padding: 20px;
+}
+.mail p {
+    padding: 10px;
+}
+
 .loader {
     border: 6px solid #f3f3f3; /* Light grey */
     border-top: 6px solid #3498db; /* Blue */
