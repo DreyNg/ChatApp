@@ -1,13 +1,13 @@
 class MainScreen {
     container;
 
-    cunstructor() {
+    constructor() {
         this.container = document.createElement("div");
         this.container.classList.add("main", "d-flex");
-        this.container.innerText = "MAINSCREEN";
+        this.container.innerText = "MAIN SCREEN";
     }
-    render() {
-        return this.container;
+    render(app) {
+        app.append(this.container);
     }
 }
 

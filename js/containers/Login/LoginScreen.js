@@ -87,7 +87,7 @@ class LoginScreen {
         }
     };
 
-    render() {
+    render(app) {
         this.formLogin.append(
             this.title,
             this.emailInput.render(),
@@ -97,7 +97,7 @@ class LoginScreen {
         );
 
         this.container.append(this.imageCover, this.formLogin);
-        return this.container;
+        app.append(this.container);
     }
 }
 

@@ -12,7 +12,8 @@ const createNewAccount = async (email, password) => {
         .then((userCredential) => {
             // Signed in
             let user = userCredential.user;
-            return user.sendEmailVerification(config);
+            user.sendEmailVerification(config);
+            return true;
             // ...
         })
         .catch((error) => {
@@ -20,6 +21,7 @@ const createNewAccount = async (email, password) => {
             let errorMessage = error.message;
 
             _noti.error(errorCode, errorMessage);
+            return false;
             // ..
         });
 };
@@ -42,9 +44,9 @@ const loginWithEmailPass = async (email, password) => {
         .signInWithEmailAndPassword(email, password);
 
     let user = userCredential.user;
-    localStorage.setItem("emailLogined", user.email);
-    localStorage.setItem("uid", user.uid);
-    console.log(userCredential);
+    localStorage.setItem("emailLoggedIn", user.email);
+    localStorage.setItem("userId", user.uid);
+    // console.log(userCredential);
     return user;
 };
 

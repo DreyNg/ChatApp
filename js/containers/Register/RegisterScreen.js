@@ -104,12 +104,21 @@ class RegisterScreen {
 
         if (!hasError) {
             this.setLoading();
-            await createNewAccount(email.value, password.value);
-            this.undoLoading();
-            // const checkScreenScreen = new CheckEmailScreen();
-            // app.switchCurrentScreen(checkScreenScreen);
+            this.makeRequest(
+                await createNewAccount(email.value, password.value)
+            );
         }
     };
+
+    makeRequest(registration) {
+        return new Promise((resolve, reject) => {
+            if (registration) {
+                resolve(app.switchCurrentScreen(new CheckEmailScreen()));
+            } else {
+                reject(this.undoLoading());
+            }
+        });
+    }
 
     setLoading() {
         this.buttonSubmit.render().innerText = "";
@@ -121,7 +130,7 @@ class RegisterScreen {
         this.buttonSubmit.render().innerText = "Sign up";
     }
 
-    render() {
+    render(app) {
         this.formLogin.append(
             this.title,
             this.emailInput.render(),
@@ -132,7 +141,7 @@ class RegisterScreen {
         );
 
         this.container.append(this.imageCover, this.formLogin);
-        return this.container;
+        app.append(this.container);
     }
 }
 

@@ -1,15 +1,44 @@
+import CheckEmailScreen from "./containers/CheckEmail/CheckEmailScreen.js";
 import LoginScreen from "./containers/Login/LoginScreen.js";
+import MainScreen from "./Main/MainScreen.js";
 
 class App {
     constructor() {
-        const app = document.getElementById("app");
-        const loginScreen = new LoginScreen();
-        app.appendChild(loginScreen.render());
+        this.checkStayLogin();
+    }
+    // // storing using local storage
+    // checkStayLogin() {
+    //     const emailLoggedIn = localStorage.getItem("emailLoggedIn");
+    //     let screen;
+    //     if (emailLoggedIn) {
+    //         screen = new MainScreen();
+    //     } else {
+    //         screen = new LoginScreen();
+    //     }
+    //     this.switchCurrentScreen(screen);
+    // }
+
+    // checking using Fb
+    checkStayLogin() {
+        firebase.auth().onAuthStateChanged((user) => {
+            let screen;
+            if (user) {
+                if (user.emailVerified) {
+                    screen = new MainScreen();
+                } else {
+                    screen = new CheckEmailScreen();
+                }
+            } else {
+                screen = new LoginScreen();
+            }
+            this.switchCurrentScreen(screen);
+        });
     }
     switchCurrentScreen(screen) {
         const app = document.getElementById("app");
         app.innerHTML = "";
-        app.appendChild(screen.render());
+        screen.render(app);
+        // app.appendChild(screen.render());
     }
 }
 
