@@ -4,7 +4,11 @@ import { getCurrentUser } from "../../firebase/auth.js";
 import app from "../../index.js";
 import MainScreen from "../../Main/MainScreen.js";
 import { isValidPhone } from "../../common/validation.js";
-import { createUser, getUserByEmail } from "../../firebase/store.js";
+import {
+    createUser,
+    getUserByEmail,
+    updateUser,
+} from "../../firebase/store.js";
 
 class InfoScreen {
     container;
@@ -23,7 +27,7 @@ class InfoScreen {
 
     button;
 
-    existUser;
+    userId;
 
     constructor() {
         this.container = document.createElement("div");
@@ -88,25 +92,30 @@ class InfoScreen {
     async fetchUserByEmail() {
         const user = getCurrentUser();
         const userStored = await getUserByEmail(user.email);
-
         if (userStored) {
-            this.existUser = true;
+            this.userId = userStored.id;
 
             this.name.setAtribute("value", userStored.name);
             this.phone.setAtribute("value", userStored.phone);
             this.avatarUrl.setAtribute("value", userStored.avatarUrl);
             this.avatar.style.backgroundImage = `url(${userStored.avatarUrl})`;
         } else {
-            this.existUser = false;
+            this.userId = "";
         }
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         // console.log("abc");
         const { email, name, phone, avatarUrl } = e.target;
-        createUser(email.value, "", name.value, phone.value, avatarUrl.value);
-
+        // createUser(email.value, "", name.value, phone.value, avatarUrl.value);
+        updateUser(
+            this.userId,
+            email.value,
+            name.value,
+            phone.value,
+            avatarUrl.value
+        );
         let hasError = false;
         // if (isValidPhone(phone.value) != true) {
         //     this.phone.displayError(isValidPhone(phone.value));
