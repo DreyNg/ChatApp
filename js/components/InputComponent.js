@@ -36,6 +36,14 @@ class InputComponent {
         this.errorMessage.classList.add("d-block");
     }
 
+    setAtribute(attribute, value) {
+        this.input.setAttribute(attribute, value);
+    }
+
+    setEventListender(event, callBackFunction) {
+        this.input.addEventListener(event, callBackFunction);
+    }
+
     render() {
         this.inputContainer.append(this.input, this.errorMessage);
         this.container.append(this.label, this.inputContainer);

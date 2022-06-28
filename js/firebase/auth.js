@@ -50,4 +50,7 @@ const loginWithEmailPass = async (email, password) => {
     return user;
 };
 
-export { createNewAccount, loginWithEmailPass };
+const getCurrentUser = () => {
+    return firebase.auth().currentUser;
+};
+export { createNewAccount, loginWithEmailPass, getCurrentUser };

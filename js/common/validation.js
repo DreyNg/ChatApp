@@ -8,6 +8,12 @@ export const isValidEmail = (email) => {
     return true;
 };
 
+export const isValidPhone = (phone) => {
+    if (phone.length < 8 || phone.length > 18 || isNaN(phone)) {
+        return "Your phone number is invalid";
+    }
+    return true;
+};
 export const isValidPassword = (password) => {
     if (!password || password.length == 0) {
         return "Please enter your password";
