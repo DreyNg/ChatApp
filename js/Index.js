@@ -25,7 +25,8 @@ class App {
             let screen;
             if (user) {
                 if (user.emailVerified) {
-                    screen = new InfoScreen();
+                    // screen = new InfoScreen();
+                    screen = new MainScreen();
                 } else {
                     screen = new CheckEmailScreen();
                 }
