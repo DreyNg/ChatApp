@@ -13,7 +13,8 @@ async function createUser(email, password, name, phone, avatarUrl) {
     } catch (error) {
         let errorCode = error.code;
         let errorMessage = error.message;
-        _noti.error(errorCode, errorMessage);
+        // _noti.error(errorCode, errorMessage);
+        throw error;
     }
 }
 
@@ -34,7 +35,8 @@ async function getUserByEmail(email) {
     } catch (error) {
         let errorCode = error.code;
         let errorMessage = error.message;
-        _noti.error(errorCode, errorMessage);
+        // _noti.error(errorCode, errorMessage);
+        throw error;
     }
 }
 
@@ -49,7 +51,8 @@ async function updateUser(userId, email, name, phone, avatarUrl) {
     } catch (error) {
         let errorCode = error.code;
         let errorMessage = error.message;
-        _noti.error(errorCode, errorMessage);
+        // _noti.error(errorCode, errorMessage);
+        throw error;
     }
 }
 

@@ -14,6 +14,13 @@ export const isValidPhone = (phone) => {
     }
     return true;
 };
+
+export const isValidName = (name) => {
+    if (!name || name.length == 0) {
+        return "Your name is invalid";
+    }
+    return true;
+};
 export const isValidPassword = (password) => {
     if (!password || password.length == 0) {
         return "Please enter your password";

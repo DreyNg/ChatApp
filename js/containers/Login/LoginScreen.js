@@ -5,6 +5,8 @@ import RegisterScreen from "../Register/RegisterScreen.js";
 import app from "../../index.js";
 import { loginWithEmailPass } from "../../firebase/auth.js";
 import MainScreen from "../../Main/MainScreen.js";
+import * as _noti from "../../common/notify.js";
+
 class LoginScreen {
     container;
 
@@ -62,28 +64,36 @@ class LoginScreen {
     };
 
     handleSubmit = async (e) => {
-        e.preventDefault();
-        const { email, password } = e.target;
-        let hasError = false;
-        if (isValidEmail(email.value) != true) {
-            this.emailInput.displayError(isValidEmail(email.value));
-            hasError = true;
-        } else {
-            this.emailInput.displayError("");
-        }
-        if (isValidPassword(password.value) != true) {
-            this.passwordInput.displayError(isValidPassword(password.value));
-            hasError = true;
-        } else {
-            this.passwordInput.displayError("");
-        }
-        if (!hasError) {
-            const userLogin = await loginWithEmailPass(
-                email.value,
-                password.value
-            );
-            const mainScreen = new MainScreen();
-            app.switchCurrentScreen(mainScreen);
+        try {
+            e.preventDefault();
+            const { email, password } = e.target;
+            let hasError = false;
+            if (isValidEmail(email.value) != true) {
+                this.emailInput.displayError(isValidEmail(email.value));
+                hasError = true;
+            } else {
+                this.emailInput.displayError("");
+            }
+            if (isValidPassword(password.value) != true) {
+                this.passwordInput.displayError(
+                    isValidPassword(password.value)
+                );
+                hasError = true;
+            } else {
+                this.passwordInput.displayError("");
+            }
+            if (!hasError) {
+                const userLogin = await loginWithEmailPass(
+                    email.value,
+                    password.value
+                );
+                const mainScreen = new MainScreen();
+                app.switchCurrentScreen(mainScreen);
+            }
+        } catch (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            _noti.error(errorCode, errorMessage);
         }
     };
 

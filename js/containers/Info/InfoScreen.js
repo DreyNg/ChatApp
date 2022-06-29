@@ -3,12 +3,13 @@ import InputComponent from "../../components/InputComponent.js";
 import { getCurrentUser } from "../../firebase/auth.js";
 import app from "../../index.js";
 import MainScreen from "../../Main/MainScreen.js";
-import { isValidPhone } from "../../common/validation.js";
+import { isValidPhone, isValidName } from "../../common/validation.js";
 import {
     createUser,
     getUserByEmail,
     updateUser,
 } from "../../firebase/store.js";
+import * as _noti from "../../common/notify.js";
 
 class InfoScreen {
     container;
@@ -105,29 +106,50 @@ class InfoScreen {
     }
 
     handleSubmit = async (e) => {
-        e.preventDefault();
-        // console.log("abc");
-        const { email, name, phone, avatarUrl } = e.target;
-        // createUser(email.value, "", name.value, phone.value, avatarUrl.value);
-        updateUser(
-            this.userId,
-            email.value,
-            name.value,
-            phone.value,
-            avatarUrl.value
-        );
-        let hasError = false;
-        // if (isValidPhone(phone.value) != true) {
-        //     this.phone.displayError(isValidPhone(phone.value));
-        //     hasError = true;
-        //     // console.log("ababababa");
-        // } else {
-        //     this.phone.displayError("");
-        // }
-        if (!hasError) {
-            // console.log("xxxxxxx");
-            // const mainScreen = new MainScreen();
-            // app.switchCurrentScreen(mainScreen);
+        try {
+            e.preventDefault();
+            const { email, name, phone, avatarUrl } = e.target;
+            let hasError = false;
+
+            if (isValidPhone(phone.value) != true) {
+                this.phone.displayError(isValidPhone(phone.value));
+                hasError = true;
+            } else {
+                this.phone.displayError("");
+            }
+
+            if (isValidName(name.value) != true) {
+                this.name.displayError(isValidName(name.value));
+                hasError = true;
+            } else {
+                this.name.displayError("");
+            }
+            if (!hasError) {
+                if (this.userId) {
+                    await updateUser(
+                        this.userId,
+                        email.value,
+                        name.value,
+                        phone.value,
+                        avatarUrl.value
+                    );
+                } else {
+                    await createUser(
+                        email.value,
+                        "",
+                        name.value,
+                        phone.value,
+                        avatarUrl.value
+                    );
+                }
+                console.log("xxxxxxx");
+                const mainScreen = new MainScreen();
+                app.switchCurrentScreen(mainScreen);
+            }
+        } catch (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            _noti.error(errorCode, errorMessage);
         }
     };
 

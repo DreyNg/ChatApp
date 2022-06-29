@@ -5,6 +5,8 @@ import LoginScreen from "../Login/LoginScreen.js";
 import CheckEmailScreen from "../CheckEmail/CheckEmailScreen.js";
 import app from "../../index.js";
 import { createNewAccount } from "../../firebase/auth.js";
+import * as _noti from "../../common/notify.js";
+
 class RegisterScreen {
     container;
 
@@ -71,42 +73,50 @@ class RegisterScreen {
     };
 
     handleSubmit = async (e) => {
-        e.preventDefault();
-        const { email, password, passwordConfirmationInput } = e.target;
-        let hasError = false;
-        if (isValidEmail(email.value) != true) {
-            this.emailInput.displayError(isValidEmail(email.value));
-            hasError = true;
-        } else {
-            this.emailInput.displayError("");
-        }
+        try {
+            e.preventDefault();
+            const { email, password, passwordConfirmationInput } = e.target;
+            let hasError = false;
+            if (isValidEmail(email.value) != true) {
+                this.emailInput.displayError(isValidEmail(email.value));
+                hasError = true;
+            } else {
+                this.emailInput.displayError("");
+            }
 
-        if (isValidPassword(password.value) != true) {
-            this.passwordInput.displayError(isValidPassword(password.value));
-            hasError = true;
-        } else {
-            this.passwordInput.displayError("");
-        }
+            if (isValidPassword(password.value) != true) {
+                this.passwordInput.displayError(
+                    isValidPassword(password.value)
+                );
+                hasError = true;
+            } else {
+                this.passwordInput.displayError("");
+            }
 
-        if (isValidPassword(passwordConfirmationInput.value) != true) {
-            this.passwordConfirmationInput.displayError(
-                isValidPassword(passwordConfirmationInput.value)
-            );
-            hasError = true;
-        } else if (passwordConfirmationInput.value != password.value) {
-            this.passwordConfirmationInput.displayError(
-                "Password confirmation does not match"
-            );
-            hasError = true;
-        } else {
-            this.passwordConfirmationInput.displayError("");
-        }
+            if (isValidPassword(passwordConfirmationInput.value) != true) {
+                this.passwordConfirmationInput.displayError(
+                    isValidPassword(passwordConfirmationInput.value)
+                );
+                hasError = true;
+            } else if (passwordConfirmationInput.value != password.value) {
+                this.passwordConfirmationInput.displayError(
+                    "Password confirmation does not match"
+                );
+                hasError = true;
+            } else {
+                this.passwordConfirmationInput.displayError("");
+            }
 
-        if (!hasError) {
-            this.setLoading();
-            this.makeRequest(
-                await createNewAccount(email.value, password.value)
-            );
+            if (!hasError) {
+                this.setLoading();
+                this.makeRequest(
+                    await createNewAccount(email.value, password.value)
+                );
+            }
+        } catch (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            _noti.error(errorCode, errorMessage);
         }
     };
 
