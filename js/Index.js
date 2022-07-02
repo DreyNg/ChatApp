@@ -1,6 +1,6 @@
 import CheckEmailScreen from "./containers/CheckEmail/CheckEmailScreen.js";
 import LoginScreen from "./containers/Login/LoginScreen.js";
-import MainScreen from "./Main/MainScreen.js";
+import MainScreen from "./containers/Main/MainScreen.js";
 import InfoScreen from "./containers/Info/InfoScreen.js";
 
 class App {

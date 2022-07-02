@@ -2,7 +2,7 @@ import ButtonComponent from "../../components/ButtonComponent.js";
 import InputComponent from "../../components/InputComponent.js";
 import { getCurrentUser } from "../../firebase/auth.js";
 import app from "../../index.js";
-import MainScreen from "../../Main/MainScreen.js";
+import MainScreen from "../Main/MainScreen.js";
 import { isValidPhone, isValidName } from "../../common/validation.js";
 import {
     createUser,

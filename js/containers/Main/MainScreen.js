@@ -21,7 +21,7 @@ class MainScreen {
         app.append(this.container);
 
         this.container.append(this.paper);
-        this.paper.append(this.sidebarComponent.render());
+        this.sidebarComponent.render(this.paper);
     }
 }
 
