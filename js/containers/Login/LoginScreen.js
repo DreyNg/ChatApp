@@ -2,7 +2,7 @@ import ButtonComponent from "../../components/ButtonComponent.js";
 import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
 import RegisterScreen from "../Register/RegisterScreen.js";
-import app from "../../index.js";
+import app from "../../Index.js";
 import { loginWithEmailPass } from "../../firebase/auth.js";
 import MainScreen from "../Main/MainScreen.js";
 import * as _noti from "../../common/notify.js";

@@ -56,4 +56,21 @@ async function updateUser(userId, email, name, phone, avatarUrl) {
     }
 }
 
-export { createUser, getUserByEmail, updateUser };
+async function createConversation(name, avatarUrl, desc, users, email) {
+    try {
+        const response = await database.collection("conversations").add({
+            name,
+            avatarUrl,
+            description: desc,
+            users,
+            createdBy: email,
+        });
+    } catch (error) {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        // _noti.error(errorCode, errorMessage);
+        throw error;
+    }
+}
+
+export { createUser, getUserByEmail, updateUser, createConversation };

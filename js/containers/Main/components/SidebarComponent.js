@@ -1,5 +1,8 @@
 import SidebarConversation from "./SidebarConversation.js";
-
+import { isValidName } from "../../../common/validation.js";
+import * as _noti from "../../../common/notify.js";
+import { createConversation, getUserByEmail } from "../../../firebase/store.js";
+import { getCurrentUser } from "../../../firebase/auth.js";
 class SidebarComponent {
     container;
 
@@ -86,11 +89,28 @@ class SidebarComponent {
         btnClose.click();
     };
 
-    handleCreate = () => {
-        const name = document.getElementById("name-conversation");
-        const avatarUrl = document.getElementById("img-conversation");
-        console.log(name.value, avatarUrl.value);
-        this.handleClose();
+    handleCreate = async () => {
+        try {
+            const name = document.getElementById("name-conversation");
+            const avatarUrl = document.getElementById("img-conversation");
+            const user = getCurrentUser();
+            console.log(name.value, avatarUrl.value);
+            if (isValidName(name.value) != true) {
+                _note.warning("Conversation name", isValidName(name.value));
+                return;
+            } else {
+                await createConversation(
+                    name.value,
+                    avatarUrl.value,
+                    "DESC",
+                    [user.email],
+                    user.email
+                );
+            }
+            this.handleClose();
+        } catch (error) {
+            _note.error(error.code, error.message);
+        }
     };
 
     render(parentContainer) {

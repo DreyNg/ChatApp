@@ -16,7 +16,7 @@ export const isValidPhone = (phone) => {
 };
 
 export const isValidName = (name) => {
-    if (!name || name.length == 0) {
+    if (!name || name.length == 0 || name.length > 50) {
         return "Your name is invalid";
     }
     return true;

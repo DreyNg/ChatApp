@@ -3,7 +3,7 @@ import InputComponent from "../../components/InputComponent.js";
 import { isValidEmail, isValidPassword } from "../../common/validation.js";
 import LoginScreen from "../Login/LoginScreen.js";
 import CheckEmailScreen from "../CheckEmail/CheckEmailScreen.js";
-import app from "../../index.js";
+import app from "../../Index.js";
 import { createNewAccount } from "../../firebase/auth.js";
 import * as _noti from "../../common/notify.js";
 
