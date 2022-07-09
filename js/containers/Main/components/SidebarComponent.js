@@ -17,7 +17,7 @@ class SidebarComponent {
     constructor() {
         this.container = document.createElement("div");
         this.container.classList.add("sidebar-container", "d-flex");
-        this.container.innerText = "SIDEBAR";
+        // this.container.innerText = "SIDEBAR";
 
         this.title = document.createElement("div");
         this.title.classList.add("sidebar-title");

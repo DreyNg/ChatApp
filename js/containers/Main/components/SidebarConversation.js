@@ -1,19 +1,68 @@
 class SidebarConversation {
+    // Layout
     container;
-
-    avatarUrl;
-
     subContainer;
-    title;
-    description;
+    actionContainer;
+    popUpContainer;
+
+    avatarEle;
+    nameEle;
+    descEle;
+    btnMore;
+    btnUpdate;
+    btnDelete;
+
+    //Data
+    id;
+    name;
+    avatarUrl;
+    desc;
+    users;
+    creater;
 
     constructor() {
         this.container = document.createElement("div");
-        this.container.classList.add("sidebar-chat", "d-flex");
-        this.container.innerText = "Drey Nguyen";
+        this.container.classList.add("cs-item", "d-flex");
+
+        this.avatarEle = document.createElement("div");
+        this.avatarEle.classList.add("cs-avatar");
+
+        this.subContainer = document.createElement("div");
+        this.subContainer.classList.add("cs-sub-container");
+
+        this.actionContainer = document.createElement("div");
+        this.actionContainer.classList.add("cs-action-container");
+
+        this.nameEle = document.createElement("div");
+        this.nameEle.classList.add("cs-name");
+
+        this.descEle = document.createElement("div");
+        this.descEle.classList.add("cs-desc");
+
+        this.popUpContainer = document.createElement("div");
+        this.popUpContainer.classList.add("cs-popup");
+
+        this.btnMore = document.createElement("div");
+        this.btnMore.classList.add("btn-show-more");
+
+        this.btnUpdate = document.createElement("div");
+        this.btnUpdate.classList.add("btn-popup");
+        this.btnUpdate.innerText = "Update";
+
+        this.btnDelete = document.createElement("div");
+        this.btnDelete.classList.add("btn-popup");
+        this.btnUpdate.innerText = "Delete";
     }
 
     render() {
+        this.container.append(
+            this.avatarEle,
+            this.subContainer,
+            this.actionContainer
+        );
+        this.subContainer.append(this.nameEle, this.descEle);
+        this.actionContainer.append(this.btnMore);
+
         return this.container;
     }
 }
