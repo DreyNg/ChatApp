@@ -194,6 +194,12 @@ body {
     visibility: hidden;
     opacity: 0;
 }
+
+.show {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+}
 .list-container {
     max-height: 100%;
     overflow: auto;

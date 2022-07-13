@@ -23,6 +23,7 @@ class SidebarConversation {
     constructor() {
         this.container = document.createElement("div");
         this.container.classList.add("cs-item", "d-flex");
+        this.container.addEventListener("mouseleave", this.hidePopup);
 
         this.avatarEle = document.createElement("div");
         this.avatarEle.classList.add("cs-avatar");
@@ -44,6 +45,7 @@ class SidebarConversation {
 
         this.btnMore = document.createElement("div");
         this.btnMore.classList.add("btn-show-more");
+        this.btnMore.addEventListener("click", this.handleToggle);
 
         this.btnUpdate = document.createElement("div");
         this.btnUpdate.classList.add("btn-popup");
@@ -51,8 +53,21 @@ class SidebarConversation {
 
         this.btnDelete = document.createElement("div");
         this.btnDelete.classList.add("btn-popup");
-        this.btnUpdate.innerText = "Delete";
+        this.btnDelete.innerText = "Delete";
     }
+
+    hidePopup = () => {
+        if (this.popUpContainer.classList.contains("show")) {
+            this.popUpContainer.classList.remove("show");
+        }
+    };
+    handleToggle = (e) => {
+        if (this.popUpContainer.classList.contains("show")) {
+            this.popUpContainer.classList.remove("show");
+        } else {
+            this.popUpContainer.classList.add("show");
+        }
+    };
 
     render() {
         this.container.append(
@@ -60,8 +75,11 @@ class SidebarConversation {
             this.subContainer,
             this.actionContainer
         );
+
         this.subContainer.append(this.nameEle, this.descEle);
         this.actionContainer.append(this.btnMore);
+        this.btnMore.append(this.popUpContainer);
+        this.popUpContainer.append(this.btnUpdate, this.btnDelete);
 
         return this.container;
     }

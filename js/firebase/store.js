@@ -61,9 +61,9 @@ async function createConversation(name, avatarUrl, desc, users, email) {
         const response = await database.collection("conversations").add({
             name,
             avatarUrl,
-            description: desc,
+            // description: desc,
             users,
-            createdBy: email,
+            creator: email,
         });
     } catch (error) {
         let errorCode = error.code;
@@ -73,4 +73,42 @@ async function createConversation(name, avatarUrl, desc, users, email) {
     }
 }
 
-export { createUser, getUserByEmail, updateUser, createConversation };
+async function updateConversation(id, name, avatarUrl, users, email) {
+    try {
+        const response = await database
+            .collection("conversations")
+            .doc(id)
+            .update({
+                name,
+                avatarUrl,
+                // description: desc,
+                users,
+                creator: email,
+            });
+    } catch (error) {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        // _noti.error(errorCode, errorMessage);
+        throw error;
+    }
+}
+
+async function deleteConversation() {
+    try {
+        const response = await database.collection("conversations").delete();
+    } catch (error) {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        // _noti.error(errorCode, errorMessage);
+        throw error;
+    }
+}
+
+export {
+    createUser,
+    getUserByEmail,
+    updateUser,
+    createConversation,
+    updateConversation,
+    deleteConversation,
+};
