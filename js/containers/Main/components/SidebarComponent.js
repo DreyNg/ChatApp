@@ -3,6 +3,7 @@ import { isValidName } from "../../../common/validation.js";
 import * as _noti from "../../../common/notify.js";
 import { createConversation, getUserByEmail } from "../../../firebase/store.js";
 import { getCurrentUser } from "../../../firebase/auth.js";
+import database from "../../../firebase/index.js";
 class SidebarComponent {
     container;
 
@@ -10,7 +11,7 @@ class SidebarComponent {
     buttonCreate;
 
     listContainer;
-    listConversation;
+    listConversation = [];
 
     modal;
 
@@ -35,12 +36,98 @@ class SidebarComponent {
         this.listContainer = document.createElement("div");
         this.listContainer.classList.add("list-container");
 
-        this.listConversation = new Array(10)
-            .fill(1)
-            .map((i) => new SidebarConversation().render());
+        // this.listConversation = new Array(10)
+        //     .fill(1)
+        //     .map((i) => new SidebarConversation().render());
 
         this.renderModal();
+        this.setUpConversationListener();
     }
+
+    setUpConversationListener() {
+        const user = getCurrentUser();
+        database
+            .collection("conversations")
+            .where("users", "array-contains", user.email)
+            .orderBy("updateAt", "desc")
+            .onSnapshot((snapshot) => {
+                console.log(snapshot);
+                console.log(snapshot.docChanges());
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        const addedConv = new SidebarConversation({
+                            ...change.doc.data(),
+                            id: change.doc.id,
+                        });
+
+                        this.listContainer.push(addedConv.render());
+                    }
+                    if (change.type === "modified") {
+                        const addedConv = new SidebarConversation({
+                            ...change.doc.data(),
+                            id: change.doc.id,
+                        });
+
+                        this.listContainer.push(addedConv.render());
+                    }
+                    if (change.type === "removed") {
+                        const addedConv = new SidebarConversation({
+                            ...change.doc.data(),
+                            id: change.doc.id,
+                        });
+
+                        this.listContainer.push(addedConv.render());
+                    }
+                });
+            });
+    }
+
+    // setUpConversationListener() {
+    //     const user = getCurrentUser();
+    //     database
+    //         .collection("conversations")
+    //         .where("users", "array-contains", user.email)
+    //         .onSnapshot((snapshot) => {
+    //             console.log(snapshot.docChanges());
+    //             snapshot.docChanges().forEach((change) => {
+    //                 if (change.type === "added") {
+    //                     console.log(change.doc.data());
+    //                     const newConversation = {
+    //                         ...change.doc.data(),
+    //                         id: change.doc.id,
+    //                     };
+    //                     const addedConver = new SidebarConversation(
+    //                         newConversation,
+    //                         this.handleUpdateCon,
+    //                         this.handleDeleteCon
+    //                     );
+    //                     // this.$listItems.push(addedConver);
+    //                     this.$objItems[change.doc.id] = addedConver;
+
+    //                     this.$listContainer.append(addedConver.render());
+    //                 }
+    //                 if (change.type === "modified") {
+    //                     console.log(change.doc.data());
+
+    //                     if (this.$objItems[change.doc.id]) {
+    //                         this.$objItems[change.doc.id].setUpData(
+    //                             {
+    //                                 ...change.doc.data(),
+    //                                 id: change.doc.id,
+    //                             },
+    //                             this.handleUpdateCon,
+    //                             this.handleDeleteCon
+    //                         );
+    //                     }
+    //                 }
+    //                 if (change.type === "removed") {
+    //                     console.log(change.doc.data());
+
+    //                     this.$objItems[change.doc.id].unMount();
+    //                 }
+    //             });
+    //         });
+    // }
 
     renderModal() {
         this.modal = document.createElement("div");
@@ -102,14 +189,14 @@ class SidebarComponent {
                 await createConversation(
                     name.value,
                     avatarUrl.value,
-                    "DESC",
                     [user.email],
                     user.email
                 );
             }
             this.handleClose();
         } catch (error) {
-            _note.error(error.code, error.message);
+            _noti.error(error.code, error.message);
+            // throw error;
         }
     };
 
@@ -121,7 +208,6 @@ class SidebarComponent {
             this.listContainer,
             this.modal
         );
-        this.listContainer.append(...this.listConversation);
 
         document
             .getElementById("btn-create-converstation")

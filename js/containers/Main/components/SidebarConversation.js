@@ -18,9 +18,20 @@ class SidebarConversation {
     avatarUrl;
     desc;
     users;
-    creater;
+    creator;
 
-    constructor() {
+    item;
+    // conversation {
+    //     id,
+    //     name,
+    //     avatarUrl,
+    //     users,
+    //     creator
+    // }
+
+    constructor(conversation) {
+        this.item = conversation;
+
         this.container = document.createElement("div");
         this.container.classList.add("cs-item", "d-flex");
         this.container.addEventListener("mouseleave", this.hidePopup);
@@ -54,7 +65,26 @@ class SidebarConversation {
         this.btnDelete = document.createElement("div");
         this.btnDelete.classList.add("btn-popup");
         this.btnDelete.innerText = "Delete";
+
+        this.setUpData();
     }
+
+    setUpData = (conv) => {
+        this.id = conv.id;
+        this.name = conv.name;
+        this.avatarUrl = conv.name;
+        this.desc = `${conv.users.length} user(s)`;
+        this.users = conv.users;
+        this.creator = conv.creator;
+
+        this.fillDataToEle();
+    };
+
+    fillDataToEle = () => {
+        this.avatarEle.style.backgroundImage = `url(${this.avatarUrl})`;
+        this.nameEle.innerText = this.name;
+        this.descEle.innerText = this.desc;
+    };
 
     hidePopup = () => {
         if (this.popUpContainer.classList.contains("show")) {

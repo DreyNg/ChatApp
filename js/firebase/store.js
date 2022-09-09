@@ -56,7 +56,7 @@ async function updateUser(userId, email, name, phone, avatarUrl) {
     }
 }
 
-async function createConversation(name, avatarUrl, desc, users, email) {
+async function createConversation(name, avatarUrl, users, email) {
     try {
         const response = await database.collection("conversations").add({
             name,
@@ -65,6 +65,7 @@ async function createConversation(name, avatarUrl, desc, users, email) {
             users,
             creator: email,
         });
+        console.log(response);
     } catch (error) {
         let errorCode = error.code;
         let errorMessage = error.message;
@@ -85,6 +86,7 @@ async function updateConversation(id, name, avatarUrl, users, email) {
                 users,
                 creator: email,
             });
+        console.log(response);
     } catch (error) {
         let errorCode = error.code;
         let errorMessage = error.message;
